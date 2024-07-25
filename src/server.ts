@@ -146,20 +146,26 @@ router.get('/', ctx => {
 
 const database = dySDK.database();
 router.get('/api/get', async (ctx) => {
-    const todos = await database.collection("gamedata").get();
-    ctx.body = {
-        data: todos
-    }
-    return 'success';
-}).post('/api/add', async (ctx) => {
     const value = ctx.request.header['x-tt-openid'] as string;
+
+    if (value) {
+        const todos = await database.collection("gamedata").where({ openid: value });
+        ctx.body = {
+            data: todos,
+            success: true
+        }
+    } else {
+        ctx.body = {
+            success: false,
+            message: `dyc-open-id not exist`,
+        }
+    }
+}).post('/api/add', async (ctx) => {
     const todos = await database.collection("gamedata").add({
-        data: ctx.request.body,
-        openid: value
+        data: ctx.request.body
     });
     ctx.body = {
-        data: todos,
-        openid: value
+        data: todos
     }
     return 'success';
 }).post('/api/update', async (ctx) => {
