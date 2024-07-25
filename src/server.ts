@@ -149,7 +149,7 @@ router.get('/api/get', async (ctx) => {
     const value = ctx.request.header['x-tt-openid'] as string;
 
     if (value) {
-        const todos = await database.collection("gamedata").where({ openid: value });
+        const todos = await database.collection("gamedata").where({ openid: value }).get();
         ctx.body = {
             data: todos,
             success: true
