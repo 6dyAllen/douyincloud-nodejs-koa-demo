@@ -152,11 +152,14 @@ router.get('/api/get', async (ctx) => {
     }
     return 'success';
 }).post('/api/add', async (ctx) => {
+    const value = ctx.request.header['x-tt-openid'] as string;
     const todos = await database.collection("gamedata").add({
-        data: ctx.request.body
+        data: ctx.request.body,
+        openid: value
     });
     ctx.body = {
-        data: todos
+        data: todos,
+        openid: value
     }
     return 'success';
 }).post('/api/update', async (ctx) => {
