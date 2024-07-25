@@ -144,10 +144,11 @@ router.get('/', ctx => {
     }
 });
 
+
 const database = dySDK.database();
 
 router.get('/api/get', async (ctx) => {
-    const value = ctx.request.header['x-tt-openid'] as string;
+    const value = dySDK.context(ctx).getContext().openId;
 
     if (value) {
         const todos = await database.collection("gamedata").where({ openid: value }).get();
@@ -162,7 +163,7 @@ router.get('/api/get', async (ctx) => {
         }
     }
 }).post('/api/add', async (ctx) => {
-    const value = ctx.request.header['x-tt-openid'] as string;
+    const value = dySDK.context(ctx).getContext().openId;
 
     const todos = await database.collection("gamedata").add({
         data: ctx.request.body,
@@ -173,7 +174,7 @@ router.get('/api/get', async (ctx) => {
     }
     return 'success';
 }).post('/api/update', async (ctx) => {
-    const value = ctx.request.header['x-tt-openid'] as string;
+    const value = dySDK.context(ctx).getContext().openId;
 
     const todos = await database.collection("gamedata").where({ openid: value }).update({
         data: ctx.request.body,
