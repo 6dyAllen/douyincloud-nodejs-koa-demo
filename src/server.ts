@@ -156,11 +156,13 @@ router.get('/api/get', async (ctx) => {
             data: todos,
             success: true
         }
+        ctx.status = 200;
     } else {
         ctx.body = {
             success: false,
-            message: `dyc-open-id not exist`,
+            message: `dyc-open-id not exist`
         }
+        ctx.status = 500;
     }
 }).post('/api/add', async (ctx) => {
     const value = ctx.request.header['x-tt-openid'] as string;
@@ -174,11 +176,13 @@ router.get('/api/get', async (ctx) => {
             data: todos,
             success: true
         }
+        ctx.status = 200;
     } else {
         ctx.body = {
             success: false,
             message: `dyc-open-id not exist`,
         }
+        ctx.status = 500;
     }
 }).post('/api/update', async (ctx) => {
     const value = ctx.request.header['x-tt-openid'] as string;
@@ -192,11 +196,13 @@ router.get('/api/get', async (ctx) => {
             data: todos,
             success: true
         }
+        ctx.status = 200;
     } else {
         ctx.body = {
             success: false,
             message: `dyc-open-id not exist`,
         }
+        ctx.status = 500;
     }
 })
 
