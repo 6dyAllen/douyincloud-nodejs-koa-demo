@@ -156,7 +156,12 @@ router.get('/api/get', async (ctx) => {
             data: todos,
             success: true
         }
-        ctx.status = 200;
+        if (todos.data) {
+            ctx.status = 200;
+        } else {
+            ctx.status = 500;
+        }
+
     } else {
         ctx.body = {
             success: false,
