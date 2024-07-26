@@ -152,12 +152,14 @@ router.get('/api/get', async (ctx) => {
 
     if (value) {
         const todos = await database.collection("gamedata").where({ openid: value }).get();
-        ctx.body = {
-            data: todos,
-            success: true
-        }
+
         if (todos.data.length > 0) {
             ctx.status = 200;
+
+            ctx.body = {
+                data: todos.data[0],
+                success: true
+            }
         } else {
             ctx.status = 500;
         }
